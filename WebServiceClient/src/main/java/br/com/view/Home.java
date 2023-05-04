@@ -51,7 +51,7 @@ public class Home {
 	}
 
 	private static void mostrarDados(int option, String start, String end) {
-		
+
 		// Código de conexão com webservice.
 
 	}
