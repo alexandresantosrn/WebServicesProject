@@ -3,6 +3,10 @@ package br.com.view;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+
 public class Home {
 
 	public static void main(String[] args) {
@@ -25,13 +29,19 @@ public class Home {
 
 			while (option != 0) {
 
-				start = carregarQuestoes("início");
-				end = carregarQuestoes("fim");
-
+				//start = carregarQuestoes("início");
+				//end = carregarQuestoes("fim");
+				
 //				startDate = LocalDate.parse(start, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 //				endDate = LocalDate.parse(end, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-				mostrarDados(option, start, end);
+				 
+				System.out.print("Informe a data início para o aluguel - (Formato: DD/MM/AAAA): ");
+				start = in.next();
+				
+				System.out.print("Informe a data final para o aluguel - (Formato: DD/MM/AAAA): ");
+				end = in.next();
+				
+				connect(option, start, end);
 
 			}
 		}
@@ -50,10 +60,12 @@ public class Home {
 		}
 	}
 
-	private static void mostrarDados(int option, String start, String end) {
+	private static void connect(int option, String start, String end) {
 
-		// Código de conexão com webservice.
-
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target("http://localhost:8080/WebProject/rest");
+		String conect = target.path("/hello").request().get(String.class);
+		System.out.println("Teste " + conect);
 	}
 
 }
