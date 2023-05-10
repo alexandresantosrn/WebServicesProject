@@ -35,10 +35,10 @@ public class Home {
 //				startDate = LocalDate.parse(start, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 //				endDate = LocalDate.parse(end, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				 
-				System.out.print("Informe a data início para o aluguel - (Formato: DD/MM/AAAA): ");
+				System.out.print("Informe a data início para o aluguel - (Formato: DD-MM-AAAA): ");
 				start = in.next();
 				
-				System.out.print("Informe a data final para o aluguel - (Formato: DD/MM/AAAA): ");
+				System.out.print("Informe a data final para o aluguel - (Formato: DD-MM-AAAA): ");
 				end = in.next();
 				
 				connect(option, start, end);
@@ -63,7 +63,8 @@ public class Home {
 	private static void connect(int option, String start, String end) {
 
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target("http://localhost:8080/WebProject/rest");
+		//WebTarget target = client.target("http://localhost:8080/WebProject/rest");
+		WebTarget target = client.target("http://localhost:8080/WebServiceServer/rest");
 		String conect = target.path("/hello").request().get(String.class);
 		System.out.println("Teste " + conect);
 	}
