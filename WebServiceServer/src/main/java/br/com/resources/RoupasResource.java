@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import br.com.model.Aluguel;
@@ -45,9 +46,13 @@ public class RoupasResource {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String sayHello() {
+	public String getRoupasDisponiveis(@QueryParam("estilo") String estilo, @QueryParam("dataInicio") String dataInicio,
+			@QueryParam("dataFim") String dataFim) {
+		
 		String msg = "";
 		popularObjetos();
+		
+		System.out.println("Caralho Beavis");
 
 		msg = retornarRoupas();
 		return msg;
@@ -86,13 +91,13 @@ public class RoupasResource {
 		rp.adicionarAluguel(aluguel1);
 		rp.adicionarAluguel(aluguel2);
 	}
-	
+
 	private String retornarRoupas() {
-		
+
 		String estilo = "Esportivo";
 		LocalDate inicio = LocalDate.of(2023, 03, 01);
 		LocalDate fim = LocalDate.of(2023, 03, 15);
-		
+
 		ArrayList<Roupa> roupas = new ArrayList<>();
 		roupas = rp.retornarRoupasByEstilo(estilo);
 
