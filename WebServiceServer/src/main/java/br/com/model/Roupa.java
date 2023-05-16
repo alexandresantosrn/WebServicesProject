@@ -11,7 +11,7 @@ public class Roupa {
 		super();
 		this.nome = nome;
 		this.estilo = estilo;
-		this.preco = preco;
+		this.preco = preco;		
 	}
 
 	public String getNome() {
