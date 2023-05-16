@@ -50,11 +50,10 @@ public class RoupasResource {
 			@QueryParam("dataFim") String dataFim) {
 		
 		String msg = "";
-		popularObjetos();
-		
-		System.out.println("Caralho Beavis");
+		popularObjetos();	
 
 		msg = retornarRoupas();
+		
 		return msg;
 	}
 

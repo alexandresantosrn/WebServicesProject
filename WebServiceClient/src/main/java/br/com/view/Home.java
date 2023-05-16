@@ -14,7 +14,7 @@ public class Home {
 
 		LocalDate startDate, endDate;
 		int option = 100;
-		String start, end;
+		String start, end, style = null;
 
 		try (Scanner in = new Scanner(System.in)) {
 
@@ -41,8 +41,20 @@ public class Home {
 
 				System.out.print("Informe a data final para o aluguel - (Formato: DD-MM-AAAA): ");
 				end = in.next();
+				
+				if (option == 1) {
+					style = "esportivo";
+				}
+				
+				else if (option == 2) {
+					style = "tradicional";
+				}
+				
+				else if (option == 3) {
+					style = "festa";
+				}
 
-				connect(option, start, end);
+				connect(style, start, end);
 
 			}
 		}
@@ -50,16 +62,18 @@ public class Home {
 		System.out.println(" \n" + "Até logo!!");
 	}
 
-	private static void connect(int option, String start, String end) {
+	private static void connect(String style, String start, String end) {
 
 //		Client client = ClientBuilder.newClient();
 //		// WebTarget target = client.target("http://localhost:8080/WebProject/rest");
 //		WebTarget target = client.target("http://localhost:8080/WebServiceServer/rest");
 //		String conect = target.path("/hello").request().get(String.class);
 //		System.out.println(conect);
+		
+		
 
 		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target("http://localhost:8080/WebServiceServer/rest/hello?estilo=esportivo&inicio=2023-06-01&fim=2023-06-07");
+		WebTarget myResource = client.target("http://localhost:8080/WebServiceServer/rest/hello?estilo=esportivo&inicio=2023-06-01&fim=2023-06-07");	
 		String response = myResource.request(MediaType.TEXT_PLAIN).get(String.class);
 		System.out.println(response);
 	}
