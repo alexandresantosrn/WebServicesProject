@@ -31,6 +31,7 @@ public class Home {
 			option = in.nextInt();
 
 			switch (option) {
+			
 			case 1:
 				estilo = "Esportivo";
 				break;
@@ -38,11 +39,12 @@ public class Home {
 				estilo = "Tradicional";
 				break;
 			case 3:
-				estilo = "FESTA";
+				estilo = "Festa";
 				break;
 			default:
-				estilo = "Invalido";
+				estilo = "Inválido";
 				break;
+				
 			}
 
 			while (option != 0) {

@@ -1,14 +1,16 @@
 package br.com.resources;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import br.com.model.Aluguel;
 import br.com.model.Loja;
@@ -18,46 +20,48 @@ import br.com.repository.BDRepository;
 @Path("hello")
 public class RoupasResource {
 
-	BDRepository rp = new BDRepository();
-
-	// Criação das lojas
-	Loja loja1 = new Loja("Alguém Veste");
-	Loja loja2 = new Loja("Ponto Xique");
-	Loja loja3 = new Loja("Natal Rigor");
-
-	// Criação das roupas
-	Roupa roupa1 = new Roupa("Short preto básico para corrida", "Esportivo", 15);
-	Roupa roupa2 = new Roupa("Caça legging", "Esportivo", 50);
-	Roupa roupa3 = new Roupa("Camisa musculação", "Esportivo", 30);
-	Roupa roupa4 = new Roupa("Camisa social padrão", "Tradicional", 40);
-	Roupa roupa5 = new Roupa("Vestido tradicional", "Tradicional", 70);
-	Roupa roupa6 = new Roupa("Calça Jeans padrão", "Tradicional", 30);
-	Roupa roupa7 = new Roupa("Terno completo", "Festa", 100);
-	Roupa roupa8 = new Roupa("Vestido para noiva", "Festa", 200);
-	Roupa roupa9 = new Roupa("Smoking tradicional", "Festa", 150);
-
-	// Criando localdates para aluguéis
-	LocalDate localDate1 = LocalDate.of(2023, 03, 01);
-	LocalDate localDate2 = LocalDate.of(2023, 03, 15);
-
-	// Registrando aluguéis
-	Aluguel aluguel1 = new Aluguel(roupa1, localDate1, localDate2);
-	Aluguel aluguel2 = new Aluguel(roupa2, localDate1, localDate2);
-
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getRoupasDisponiveis(@QueryParam("estilo") String estilo, @QueryParam("dataInicio") String dataInicio,
-			@QueryParam("dataFim") String dataFim) {
-		
-		String msg = "";
-		popularObjetos();	
+	@Path("hello-people/{estilo}/{inicio}/{fim}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response helloPeople(@PathParam("estilo") String estilo, @PathParam("inicio") String inicio,
+			@PathParam("fim") String fim) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-		msg = retornarRoupas();
-		
-		return msg;
+		LocalDate localDateInicio = LocalDate.parse(inicio, formatter);
+		LocalDate localDateFim = LocalDate.parse(fim, formatter);
+
+		String result = carregarItens(estilo, localDateInicio, localDateFim);
+
+		return Response.ok(result).build();
 	}
 
-	private void popularObjetos() {
+	public String carregarItens(String estilo, LocalDate inicio, LocalDate fim) {
+
+		BDRepository rp = new BDRepository();
+
+		// Criação das lojas
+		Loja loja1 = new Loja("Alguém Veste");
+		Loja loja2 = new Loja("Ponto Xique");
+		Loja loja3 = new Loja("Natal Rigor");
+
+		// Criação das roupas
+		Roupa roupa1 = new Roupa("Short preto básico para corrida", "Esportivo", 15);
+		Roupa roupa2 = new Roupa("Caça legging", "Esportivo", 50);
+		Roupa roupa3 = new Roupa("Camisa musculação", "Esportivo", 30);
+		Roupa roupa4 = new Roupa("Camisa social padrão", "Tradicional", 40);
+		Roupa roupa5 = new Roupa("Vestido tradicional", "Tradicional", 70);
+		Roupa roupa6 = new Roupa("Calça Jeans padrão", "Tradicional", 30);
+		Roupa roupa7 = new Roupa("Terno completo", "Festa", 100);
+		Roupa roupa8 = new Roupa("Vestido para noiva", "Festa", 200);
+		Roupa roupa9 = new Roupa("Smoking tradicional", "Festa", 150);
+
+		// Criando localdates para aluguéis
+		LocalDate localDate1 = LocalDate.of(2023, 03, 01);
+		LocalDate localDate2 = LocalDate.of(2023, 03, 15);
+
+		// Registrando aluguéis
+		Aluguel aluguel1 = new Aluguel(roupa1, localDate1, localDate2);
+		Aluguel aluguel2 = new Aluguel(roupa2, localDate1, localDate2);
 
 		// Adicionando roupas as lojas
 		loja1.adicionarRoupa(roupa1);
@@ -89,13 +93,6 @@ public class RoupasResource {
 		// Adicionando aluguéis ao repositório
 		rp.adicionarAluguel(aluguel1);
 		rp.adicionarAluguel(aluguel2);
-	}
-
-	private String retornarRoupas() {
-
-		String estilo = "Esportivo";
-		LocalDate inicio = LocalDate.of(2023, 03, 01);
-		LocalDate fim = LocalDate.of(2023, 03, 15);
 
 		ArrayList<Roupa> roupas = new ArrayList<>();
 		roupas = rp.retornarRoupasByEstilo(estilo);
