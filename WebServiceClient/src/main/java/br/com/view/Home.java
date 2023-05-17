@@ -1,6 +1,8 @@
 package br.com.view;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.ws.rs.client.Client;
@@ -8,53 +10,50 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import br.com.exception.RestRequestException;
+
 public class Home {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws RestRequestException {
 
-		LocalDate startDate, endDate;
 		int option = 100;
-		String start, end, style = null;
+		String estilo, inicio, fim;
 
 		try (Scanner in = new Scanner(System.in)) {
-
 			System.out.println("-----------------------------------------------------------");
 			System.out.println("-----------------------------------------------------------");
-			System.out.println("Caro cliente, informe a opção de traje desejada para aluguel:");
+			System.out.println("Caro cliente, informe a operação de traje desejada para aluguel:");
 			System.out.println("1 - Aluguel de roupas esportivas.");
 			System.out.println("2 - Aluguel de roupas tradicionais.");
 			System.out.println("3 - Aluguel de roupas para festas.");
 			System.out.println("0 - Sair.");
-			System.out.print("Opção desejada: ");
+			System.out.print("Operação desejada: ");
 			option = in.nextInt();
+
+			switch (option) {
+			case 1:
+				estilo = "Esportivo";
+				break;
+			case 2:
+				estilo = "Tradicional";
+				break;
+			case 3:
+				estilo = "FESTA";
+				break;
+			default:
+				estilo = "Invalido";
+				break;
+			}
 
 			while (option != 0) {
 
-				// start = carregarQuestoes("início");
-				// end = carregarQuestoes("fim");
-
-//				startDate = LocalDate.parse(start, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//				endDate = LocalDate.parse(end, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
 				System.out.print("Informe a data início para o aluguel - (Formato: DD-MM-AAAA): ");
-				start = in.next();
+				inicio = in.next();
 
 				System.out.print("Informe a data final para o aluguel - (Formato: DD-MM-AAAA): ");
-				end = in.next();
-				
-				if (option == 1) {
-					style = "esportivo";
-				}
-				
-				else if (option == 2) {
-					style = "tradicional";
-				}
-				
-				else if (option == 3) {
-					style = "festa";
-				}
+				fim = in.next();
 
-				connect(style, start, end);
+				connect(estilo, inicio, fim);
 
 			}
 		}
@@ -62,20 +61,18 @@ public class Home {
 		System.out.println(" \n" + "Até logo!!");
 	}
 
-	private static void connect(String style, String start, String end) {
+	private static void connect(String estilo, String inicio, String fim) throws RestRequestException {
 
-//		Client client = ClientBuilder.newClient();
-//		// WebTarget target = client.target("http://localhost:8080/WebProject/rest");
-//		WebTarget target = client.target("http://localhost:8080/WebServiceServer/rest");
-//		String conect = target.path("/hello").request().get(String.class);
-//		System.out.println(conect);
-		
-		
+		String uri = "http://localhost:8080/WebServiceServer/rest/hello/hello-people/" + estilo + "/" + inicio + "/"
+				+ fim + "/";
+		Map<String, String> headerParams = new HashMap<String, String>();
 
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target("http://localhost:8080/WebServiceServer/rest/hello?estilo=esportivo&inicio=2023-06-01&fim=2023-06-07");	
-		String response = myResource.request(MediaType.TEXT_PLAIN).get(String.class);
+		headerParams.put("accept", "application/json");
+
+		String response = HttpUtils.httpGetRequest(uri, headerParams);
+
 		System.out.println(response);
+
 	}
 
 }
