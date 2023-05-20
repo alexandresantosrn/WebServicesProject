@@ -2,29 +2,26 @@ package br.com.exception;
 
 public class RestRequestException extends Exception {
 
+	private static final long serialVersionUID = 1L;
+
 	public RestRequestException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public RestRequestException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
+		super(message);		
 	}
 
 	public RestRequestException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
+		super(cause);		
 	}
 
 	public RestRequestException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
+		super(message, cause);		
 	}
 
 	public RestRequestException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
+		super(message, cause, enableSuppression, writableStackTrace);		
 	}
 
 }
