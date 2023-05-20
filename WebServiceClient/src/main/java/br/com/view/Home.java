@@ -20,14 +20,14 @@ public class Home {
 		String estilo, inicio, fim;
 
 		try (Scanner in = new Scanner(System.in)) {
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("Caro cliente, informe a operação de traje desejada para aluguel:");
+			System.out.println("--------------------------------------------------------------");
+			System.out.println("--------------------------------------------------------------");
+			System.out.println("Caro cliente, informe a opção de traje desejada para aluguel:");
 			System.out.println("1 - Aluguel de roupas esportivas.");
 			System.out.println("2 - Aluguel de roupas tradicionais.");
 			System.out.println("3 - Aluguel de roupas para festas.");
 			System.out.println("0 - Sair.");
-			System.out.print("Operação desejada: ");
+			System.out.print("Opção desejada: ");
 			option = in.nextInt();
 
 			switch (option) {
