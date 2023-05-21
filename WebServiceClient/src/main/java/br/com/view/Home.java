@@ -59,7 +59,7 @@ public class Home {
 
 	private static void connect(String estilo, String inicio, String fim) throws RestRequestException {
 
-		String uri = "http://localhost:8080/WebServiceServer/rest/hello/hello-people/" + estilo + "/" + inicio + "/"
+		String uri = "http://localhost:8080/WebServiceServer/rest/roupas/roupas-service/" + estilo + "/" + inicio + "/"
 				+ fim + "/";
 		Map<String, String> headerParams = new HashMap<String, String>();
 

@@ -17,13 +17,13 @@ import br.com.model.Loja;
 import br.com.model.Roupa;
 import br.com.repository.BDRepository;
 
-@Path("hello")
+@Path("roupas")
 public class RoupasResource {
 
 	@GET
-	@Path("hello-people/{estilo}/{inicio}/{fim}")
+	@Path("roupas-service/{estilo}/{inicio}/{fim}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response helloPeople(@PathParam("estilo") String estilo, @PathParam("inicio") String inicio,
+	public Response clothes(@PathParam("estilo") String estilo, @PathParam("inicio") String inicio,
 			@PathParam("fim") String fim) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
